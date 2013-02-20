@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
 		
 		XMLParser test = new XMLParser();
 		test.getParks();
+		test.getSports();
 	}
 
 	@Override

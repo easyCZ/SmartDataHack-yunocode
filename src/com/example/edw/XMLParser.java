@@ -15,19 +15,48 @@ import org.w3c.dom.NodeList;
 
 public class XMLParser {
 	
-	private File file;
-	private URI uri;
+	private URI parksuri;
+	private URI sportsuri;
 	
+	public static void main(String[] args) {
+		System.out.println("ok");
+		XMLParser test = new XMLParser();
+		
+		System.out.println("Parks:");
+		test.getParks();
+		
+		System.out.println("Sports:");
+		test.getSports();
+	}
 	
-	private File getXMLSource(URI uri) {
+	public DataObject[] getParks(){
+		return getPlaces(17);
+	}
+	
+	public DataObject[] getSports(){
+		return getPlaces(25);
+	}
+	
+	private File getXMLSource(int id) {
+
+		URI uri = null;
+		File file = null;
 //		try {
-//			URI uri = new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
+//			uri = new URI("http://www.edinburgh.gov.uk/api/directories/"+id+"/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
 //		} catch (URISyntaxException e) {
 //			System.err.println("CANNOT PARSE URI");
 //		}
+//      file = new File(uri);
 		
-		file = new File(uri);
-		
+//		for testing, using local xml files:
+		switch (id) {
+		case 17: file = new File("src/data-xml/parks.xml");
+		break;
+		case 25: file = new File("src/data-xml/sports.xml");
+		break;
+		default: System.err.println("id does not match any local xml files");
+		}			
+			
 		return file;
 	}
 	
@@ -45,33 +74,21 @@ public class XMLParser {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("ok");
-		XMLParser test = new XMLParser();
-		
-		test.getParks();
-	}
-
-	public DataObject[] getParks() {
-		DataObject[] parks = null;
+	private DataObject[] getPlaces(int id) {
+		DataObject[] places = null;
 		
 		try {
-//			URI uri = new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
-			File fXmlFile = new File("entries.xml");
-//			System.out.println("OMGS");
-//			File fXmlFile = getXMLSource(new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1"));
+			File fXmlFile = getXMLSource(id);
 			
 			Document doc = makeDocument(fXmlFile);
 			
 			//optional, but recommended
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			
-			
 			Element docElement = doc.getDocumentElement();
-			
 			NodeList entries = docElement.getElementsByTagName("entry");
 			
-			parks = new DataObject[entries.getLength()];
+			places = new DataObject[entries.getLength()];
 			
 			for (int j = 0; j < entries.getLength(); j++) {
 				Element entry = (Element)entries.item(j);
@@ -85,20 +102,20 @@ public class XMLParser {
 					Double latitude = Double.NaN;
 					Double longitude = Double.NaN;
 					
-					if (field.getAttribute("id").equals("198")) {
-//						System.out.println("Name is: " + field.getTextContent());
+					if (field.getAttribute("name").equals("Name")) {
+						System.out.println("Name is: " + field.getTextContent());
 						name = field.getTextContent();
 					}
 					
-					if (field.getAttribute("id").equals("209")) {
+					if (field.getAttribute("type").equals("map") && !field.getTextContent().equals("")) {
 						String coord[] = field.getTextContent().split(",");
-//						System.out.println(coord[0] + " " + coord[1]);
+						System.out.println(coord[0] + " " + coord[1]);
 						latitude = Double.parseDouble(coord[0]);
 						longitude = Double.parseDouble(coord[1]);
-//						System.out.println("coordinate is : " + field.getTextContent());
-					}
-					
-					parks[j] = new DataPlace(name, latitude, longitude);
+						System.out.println("coordinate is : " + field.getTextContent());
+						
+						places[j] = new DataPlace(name, latitude, longitude);
+					}	
 				}
 			}
 			
@@ -107,10 +124,7 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 		
-		return parks;
-	}
-		 
-		
-		
+		return places;
+	}	
 
 }
