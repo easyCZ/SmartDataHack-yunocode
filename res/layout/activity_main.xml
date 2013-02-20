@@ -10,6 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
+   
     
     
 
@@ -37,19 +38,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_marginBottom="16dp"
-        android:background="@color/light_blue"
-        android:minWidth="250dp"
-        android:shadowColor="@color/white"
-        android:text="@string/hide" 
-        android:onClick="showHomepage"/>
-
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
@@ -58,5 +46,18 @@
         android:layout_centerHorizontal="true"
         android:text="@string/intro_checkbox"
         android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="84dp"
+        android:background="@color/light_blue"
+        android:minWidth="250dp"
+        android:onClick="showHomepage"
+        android:shadowColor="@color/white"
+        android:text="@string/hide" />
 
 </RelativeLayout>
