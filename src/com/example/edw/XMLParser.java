@@ -20,11 +20,11 @@ public class XMLParser {
 	
 	
 	private File getXMLSource(URI uri) {
-		try {
-			uri = new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
-		} catch (URISyntaxException e) {
-			System.err.println("CANNOT PARSE URI");
-		}
+//		try {
+//			URI uri = new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
+//		} catch (URISyntaxException e) {
+//			System.err.println("CANNOT PARSE URI");
+//		}
 		
 		file = new File(uri);
 		
@@ -46,9 +46,20 @@ public class XMLParser {
 	}
 	
 	public static void main(String[] args) {
+		System.out.println("ok");
+		XMLParser test = new XMLParser();
+		
+		test.getParks();
+	}
+
+	public DataObject[] getParks() {
+		DataObject[] parks = null;
+		
 		try {
 //			URI uri = new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
-			File fXmlFile = new File("src/entries.xml");
+			File fXmlFile = new File("entries.xml");
+//			System.out.println("OMGS");
+//			File fXmlFile = getXMLSource(new URI("http://www.edinburgh.gov.uk/api/directories/17/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1"));
 			
 			Document doc = makeDocument(fXmlFile);
 			
@@ -56,13 +67,11 @@ public class XMLParser {
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			
 			
-			
-			
 			Element docElement = doc.getDocumentElement();
 			
 			NodeList entries = docElement.getElementsByTagName("entry");
 			
-			DataObject[] parks = new DataObject[entries.getLength()];
+			parks = new DataObject[entries.getLength()];
 			
 			for (int j = 0; j < entries.getLength(); j++) {
 				Element entry = (Element)entries.item(j);
@@ -93,10 +102,13 @@ public class XMLParser {
 				}
 			}
 			
-		    } catch (Exception e) {
+		    
+		} catch (Exception e) {
 			e.printStackTrace();
-		    }
-		  }
+		}
+		
+		return parks;
+	}
 		 
 		
 		
