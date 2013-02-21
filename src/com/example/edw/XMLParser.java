@@ -147,10 +147,12 @@ public class XMLParser {
 				
 				NodeList entryFields = entry.getElementsByTagName("field");
 				
+				String name = null;
+				
 				for (int i = 0; i < entryFields.getLength(); i++) {
 					Element field = (Element)entryFields.item(i);
 					
-					String name = null;
+					
 					Double latitude = Double.NaN;
 					Double longitude = Double.NaN;
 					
