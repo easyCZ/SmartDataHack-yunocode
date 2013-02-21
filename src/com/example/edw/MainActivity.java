@@ -3,6 +3,7 @@ package com.example.edw;
 import java.io.File;
 import java.util.Iterator;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +21,15 @@ public class MainActivity extends Activity {
 		XMLParser test = new XMLParser(getResources());
 
 		// REPLACE THIS WITH ACTUAL SEARCH
-		Results result = new Results();
+//		Results result = new Results();
+		
+		String[] query = {"Sports", "Trees"};
+		
+		Location location = new Location("ANDRETEST");
+		location.setLatitude(0);
+		location.setLongitude(0);
+		
+		Results result = test.doSearch(query, location);
 		
 		Iterator<DataObject> iter = result.getResults().iterator();
         while(iter.hasNext())
