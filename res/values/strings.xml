@@ -9,8 +9,5 @@
     <string name="title_activity_display_homepage">DisplayHomepage</string>
     <string name="hello_world">Hello world!</string>
     <string name="hide">Hide</string>
-    <string name="title_activity_activity1">Activity1</string>
-    <string name="title_activity_activity2">Activity2</string>
-    <string name="title_activity_activity3">Activity3</string>
 
 </resources>
