@@ -18,10 +18,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		XMLParser test = new XMLParser(getResources());
-//		test.getParks();
-//		test.getSports();
 
-		Results result = test.getAll();
+		// REPLACE THIS WITH ACTUAL SEARCH
+		Results result = new Results();
 		
 		Iterator<DataObject> iter = result.getResults().iterator();
         while(iter.hasNext())
@@ -29,7 +28,7 @@ public class MainActivity extends Activity {
             System.out.println(iter.next());
         }  
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

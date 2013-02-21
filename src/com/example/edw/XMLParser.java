@@ -83,7 +83,50 @@ public class XMLParser {
 	public DataObject[] getMuseumsGalls(){
 		return getPlaces(11);
 	}
+	
+	public Results doSearch (String[] args) {
 		
+		Results results = new Results();
+		
+		for(int i = 0; i < args.length; i++) {
+			if (args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getParks() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getSports() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getComCentres() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getAllotments() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getConsAreas() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getYouthCentres() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getLibraries() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getMobLibs() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getPlayAreas() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getToilets() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getDayClubs() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getTrees() ));
+			} else if(args[i].equals(" ")) {
+				results.addAll(Arrays.asList( getMuseumsGalls() ));
+			} 
+		}
+		
+		Location location = new Location("ANDRETEST");
+		location.setLatitude(0);
+		location.setLongitude(0);
+		
+		results.sort(location);
+		
+		return results;
+	}
+	
 	private URL createCouncilURL(int id) {
 		URL url = null;
 		try {
