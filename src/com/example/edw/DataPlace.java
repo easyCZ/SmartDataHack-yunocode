@@ -10,6 +10,13 @@ public class DataPlace extends DataObject {
 		setName(name);
 		setLongtitude(lng);
 		setLatitude(lat);
+		distance = Double.NaN;
+	}
+
+	@Override
+	public String toString() {
+		return "DataPlace [lat=" + lat + ", lng=" + lng + ", name=" + name
+				+ ", distance: " + distance + "]";
 	}
 
 	@Override
@@ -30,4 +37,10 @@ public class DataPlace extends DataObject {
 	@Override
 	double getLatitude() { return lat;}
 
+	@Override
+	double getDistance() {
+		// TODO Auto-generated method stub
+		return distance;
+	}
+	
 }

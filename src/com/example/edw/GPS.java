@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class GPS extends Activity  implements OnClickListener, LocationListener{
+public class GPS extends Activity implements OnClickListener, LocationListener{
 	
 	private LocationManager locationManager;
 	private static final long MIN_TIME = 1 * 60 * 1000; //1 minute

@@ -9,5 +9,6 @@
     <string name="title_activity_display_homepage">DisplayHomepage</string>
     <string name="hello_world">Hello world!</string>
     <string name="hide">Hide</string>
+    <string name="gps_location">GPS LOCATION</string>
 
 </resources>
