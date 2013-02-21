@@ -1,5 +1,8 @@
 package com.example.edw;
 
+import java.io.File;
+import java.util.Iterator;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,9 +17,18 @@ public class MainActivity extends Activity {
 
 		setContentView(R.layout.activity_main);
 		
-		XMLParser test = new XMLParser();
-		test.getParks();
-		test.getSports();
+		XMLParser test = new XMLParser(getResources());
+//		test.getParks();
+//		test.getSports();
+
+		Results result = test.getAll();
+		
+		Iterator<DataObject> iter = result.getResults().iterator();
+        while(iter.hasNext())
+        {
+            System.out.println(iter.next());
+        }  
+		
 	}
 
 	@Override
