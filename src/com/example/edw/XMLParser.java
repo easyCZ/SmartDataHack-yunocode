@@ -38,7 +38,7 @@ public class XMLParser {
 	}
 	
 	public DataObject[] getParks(){  // Background, Facilities
-		return getPlaces(17, "Park");
+		return getPlaces(17, "Park.");
 	}
 	
 	public DataObject[] getSports(){ // "Facilities include":Facilities   Opening hours  Activities
@@ -46,11 +46,11 @@ public class XMLParser {
 	}
 	
 	public DataObject[] getComCentres(){ // Key Activities, "Facilities include": Facilities, 
-		return getPlaces(24, "Community Centre");
+		return getPlaces(24, "Community Centre.");
 	}
 		
 	public DataObject[] getAllotments(){  //Facilities, Waiting time
-		return getPlaces(32, "Allotment");
+		return getPlaces(32, "Allotment.");
 	}
 		
 	/*public DataObject[] getConsAreas(){    // no location data
@@ -58,23 +58,23 @@ public class XMLParser {
 	}*/
 		
 	public DataObject[] getYouthCentres(){ // Activities
-		return getPlaces(35, "Youth Centre");
+		return getPlaces(35, "Youth Centre.");
 	}
 		
 	public DataObject[] getLibraries(){// Details, Facilities, Book groups, Bookbug Sessions, Other events, Opening hours, 
-		return getPlaces(12, "Library");
+		return getPlaces(12, "Library.");
 	}
 	
 	public DataObject[] getMobLibs(){  //Day and time
-		return getPlaces(16, "Mobile Library");
+		return getPlaces(16, "Mobile Library.");
 	}
 
 	public DataObject[] getPlayAreas(){ // Site instead of name, Play facilities
-		return getPlaces(60, "Play Area");
+		return getPlaces(60, "Play Area.");
 	}
 		
-	public DataObject[] getToilets(){   // aka "public conveniences", Facilities, Opening times, Toilet instead of name, include this in info!
-		return getPlaces(61, "Toilet");
+	public DataObject[] getToilets(){   // aka "public conveniences", Facilities, Opening times, Toilet instead of name
+		return getPlaces(61, "Toilet.");
 	}
 		
 	public DataObject[] getDayClubs(){ // Days and times, Services provided
@@ -82,7 +82,7 @@ public class XMLParser {
 	}
 		
 	public DataObject[] getTrees(){  // Name of tree collection instead of Name, should include tree?? , Species ?, Information
-		return getPlaces(107, "Tree");
+		return getPlaces(107, "Tree.");
 	}
 		
 	public DataObject[] getMuseumsGalls(){ //Details, Opening Hours, 
@@ -245,24 +245,47 @@ public class XMLParser {
 					}
 					
 					// info
-					if (field.getAttribute("name").equals("Background")) {   // parks
-						System.out.println("Info is: " + field.getTextContent());
-						info = field.getTextContent();
+					if (field.getAttribute("name").equals("Background") || 
+						field.getAttribute("name").equals("Details") ||
+						field.getAttribute("name").equals("Species") || 
+						field.getAttribute("name").equals("Services provided") ||
+						field.getAttribute("name").equals("Information")){   
+						System.out.println("Description is: " + field.getTextContent());
+						info = info + " "+field.getTextContent()+ ".";
 					}
-					if (field.getAttribute("name").equals("Facilities") && info.equals(null)) {
-						System.out.println("Info is: " + field.getTextContent());
-						info = info + ". Facilities include: " + field.getTextContent();
+					if (field.getAttribute("name").equals("Activities") || 
+						field.getAttribute("name").equals("Key Activities") ||
+						field.getAttribute("name").equals("Book groups") ||
+						field.getAttribute("name").equals("Bookbug Sessions") ||
+						field.getAttribute("name").equals("Other events")) {
+						System.out.println("Activities are: " + field.getTextContent());
+						info = info + " Activities: " + field.getTextContent() +".";
 					}
 					
-					if (field.getAttribute("name").equals("Vacant") && info.equals(null)) {   // allotments
-						System.out.println("Info is: " + field.getTextContent());
-						info = info + ". Vacant plots: "+ field.getTextContent();
+					if (field.getAttribute("name").equals("Facilities") ||
+						field.getAttribute("name").equals("Play facilities")) {
+						System.out.println("Facilities are: " + field.getTextContent());
+						info = info + " Facilities: " + field.getTextContent() +".";
 					}
 					
-					if (field.getAttribute("name").equals("Background")) {   // parks
-						System.out.println("Info is: " + field.getTextContent());
-						info = field.getTextContent();
+					if (field.getAttribute("name").equals("Vacant")) {   // allotments
+						System.out.println("Vacant plots are: " + field.getTextContent());
+						info = info + " Vacant plots: "+ field.getTextContent() +".";
 					}
+					
+					if (field.getAttribute("name").equals("Waiting time")) {   // allotments
+						System.out.println("Waiting time is: " + field.getTextContent());
+						info = info + " Waiting time: "+ field.getTextContent() +".";
+					}
+					
+					if (field.getAttribute("name").equals("Opening Hours") || 
+						field.getAttribute("name").equals("Opening hours") ||
+						field.getAttribute("name").equals("Opening times") ||
+						field.getAttribute("name").equals("Day and time") ||
+						field.getAttribute("name").equals("Days and times")) {
+						System.out.println("Opening times is " + field.getTextContent());
+						info = info + " Open on:" + field.getTextContent() +".";
+						}
 					
 					
 					// location
