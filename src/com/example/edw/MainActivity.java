@@ -3,6 +3,7 @@ package com.example.edw;
 import java.io.File;
 import java.util.Iterator;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,10 +19,17 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		XMLParser test = new XMLParser(getResources());
-//		test.getParks();
-//		test.getSports();
 
-		Results result = test.getAll();
+		// REPLACE THIS WITH ACTUAL SEARCH
+//		Results result = new Results();
+		
+		String[] query = {"Sports", "Trees"};
+		
+		Location location = new Location("ANDRETEST");
+		location.setLatitude(0);
+		location.setLongitude(0);
+		
+		Results result = test.doSearch(query, location);
 		
 		Iterator<DataObject> iter = result.getResults().iterator();
         while(iter.hasNext())
@@ -29,7 +37,7 @@ public class MainActivity extends Activity {
             System.out.println(iter.next());
         }  
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

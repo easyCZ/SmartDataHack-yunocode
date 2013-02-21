@@ -7,6 +7,9 @@ import java.net.URL;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,6 +23,9 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.location.Location;
+import android.os.AsyncTask;
+import android.os.StrictMode;
+import android.text.format.Time;
 
 
 public class XMLParser {
@@ -72,7 +78,7 @@ public class XMLParser {
 	}
 		
 	public DataObject[] getDayClubs(){ // Days and times, Services provided
-		return getPlaces(105, null);
+		return getPlaces(105, "");
 	}
 		
 	public DataObject[] getTrees(){  // Name of tree collection instead of Name, should include tree?? , Species ?, Information
@@ -80,9 +86,46 @@ public class XMLParser {
 	}
 		
 	public DataObject[] getMuseumsGalls(){ //Details, Opening Hours, 
-		return getPlaces(11, null);
+		return getPlaces(11, "");
 	}
+	
+	public Results doSearch (String[] args, Location location) {
 		
+		Results results = new Results();
+		
+		for(int i = 0; i < args.length; i++) {
+			if (args[i].equals("Parks")) {
+				results.addAll(Arrays.asList( getParks() ));
+			} else if(args[i].equals("Sports")) {
+				results.addAll(Arrays.asList( getSports() ));
+			} else if(args[i].equals("ComCentres")) {
+				results.addAll(Arrays.asList( getComCentres() ));
+			} else if(args[i].equals("Allotments")) {
+				results.addAll(Arrays.asList( getAllotments() ));
+			} else if(args[i].equals("YouthCentres")) {
+				results.addAll(Arrays.asList( getYouthCentres() ));
+			} else if(args[i].equals("Libraries")) {
+				results.addAll(Arrays.asList( getLibraries() ));
+			} else if(args[i].equals("MobLibs")) {
+				results.addAll(Arrays.asList( getMobLibs() ));
+			} else if(args[i].equals("PlayAreas")) {
+				results.addAll(Arrays.asList( getPlayAreas() ));
+			} else if(args[i].equals("Toilets")) {
+				results.addAll(Arrays.asList( getToilets() ));
+			} else if(args[i].equals("DayClubs")) {
+				results.addAll(Arrays.asList( getDayClubs() ));
+			} else if(args[i].equals("Trees")) {
+				results.addAll(Arrays.asList( getTrees() ));
+			} else if(args[i].equals("MuseumsGalls")) {
+				results.addAll(Arrays.asList( getMuseumsGalls() ));
+			} 
+		}
+		
+		results.sort(location);
+		
+		return results;
+	}
+	
 	private URL createCouncilURL(int id) {
 		URL url = null;
 		try {
@@ -96,7 +139,46 @@ public class XMLParser {
 		
 	}
 	
-	private static Document makeDocument(URL url) {
+//	static Document docc;
+	
+	private static Document makeDocument(URL url) throws InterruptedException, ExecutionException, TimeoutException {
+		
+//		docc = null;
+//		
+//		class RetreiveFeedTask extends AsyncTask<URL, Document, Document> {
+//
+//		    private Exception exception;
+//
+//		    protected Document doInBackground(URL... urls) {
+//		        try {
+//		            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//					Document document = dBuilder.parse(urls[0].openStream());
+//					return document;
+//		        } catch (Exception e) {
+//		            this.exception = e;
+//		            return null;
+//		        }
+//		    }
+//
+//		    protected void onPostExecute(Document document) {
+//		        // TODO: check this.exception 
+//		        // TODO: do something with the feed
+//		    	System.out.println("Have result");
+//		    	docc = document;
+//		    }
+//		 }
+//		
+//		
+//		AsyncTask<URL, Document, Document> task = new RetreiveFeedTask().execute(url);
+//		task.get(1000, TimeUnit.HOURS);
+//		System.out.println("HERE");
+//		
+//		return docc;
+//		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+		StrictMode.setThreadPolicy(policy); 
 		
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -110,10 +192,10 @@ public class XMLParser {
 		return null;
 		
 	}
-	
+
 	private DataObject[] getPlaces(int id, String type) {
-		DataObject[] places = null;
 		
+		DataObject[] places = null;
 		try {
 			URL url = createCouncilURL(id);
 			Document doc = makeDocument(url);
@@ -145,7 +227,7 @@ public class XMLParser {
 					
 					// name
 					if (field.getAttribute("name").equals("Name")) {
-						System.out.println("Name is: " + field.getTextContent());
+//						System.out.println("Name is: " + field.getTextContent());
 						name = field.getTextContent();
 					}
 					if (field.getAttribute("name").equals("Site") && name.equals(null)) {
@@ -186,21 +268,20 @@ public class XMLParser {
 					// location
 					if (field.getAttribute("type").equals("map") && !field.getTextContent().equals("") && field.getTextContent().contains(".")) {
 						String coord[] = field.getTextContent().split(",");
-						System.out.println(coord[0] + " " + coord[1]);
+//						System.out.println(coord[0] + " " + coord[1]);
 						latitude = Double.parseDouble(coord[0]);
 						longitude = Double.parseDouble(coord[1]);
-						System.out.println("coordinate is : " + field.getTextContent());
+//						System.out.println("coordinate is : " + field.getTextContent());
 						
 						places[j] = new DataPlace(name, latitude, longitude, info, link);
 					}	
 				}
 			}
-			
 		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Places with id " +id + " found: "+places.length);
+//		System.out.println("Places with id " +id + " found: "+places.length);
 		return places;
 	}	
 
