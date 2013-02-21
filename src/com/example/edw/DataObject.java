@@ -11,6 +11,10 @@ public abstract class DataObject {
 	abstract double getLongtitude();
 	abstract void setLatitude(double lat);
 	abstract double getLatitude();
+	abstract void setInfo(String info);
+	abstract String getInfo();
+	abstract void setLink(String link);
+	abstract String getLink();
 	abstract double getDistance();
 	
 	/*

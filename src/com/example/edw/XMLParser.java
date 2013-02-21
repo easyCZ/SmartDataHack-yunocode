@@ -31,56 +31,56 @@ public class XMLParser {
 		this.resource = resource;
 	}
 	
-	public DataObject[] getParks(){
-		return getPlaces(17);
+	public DataObject[] getParks(){  // Background, Facilities
+		return getPlaces(17, "Park");
 	}
 	
-	public DataObject[] getSports(){
-		return getPlaces(25);
+	public DataObject[] getSports(){ // "Facilities include":Facilities   Opening hours  Activities
+		return getPlaces(25, "");
 	}
 	
-	public DataObject[] getComCentres(){
-		return getPlaces(24);
+	public DataObject[] getComCentres(){ // Key Activities, "Facilities include": Facilities, 
+		return getPlaces(24, "Community Centre");
 	}
 		
-	public DataObject[] getAllotments(){
-		return getPlaces(32);
+	public DataObject[] getAllotments(){  //Facilities, Waiting time
+		return getPlaces(32, "Allotment");
 	}
 		
-	public DataObject[] getConsAreas(){
+	/*public DataObject[] getConsAreas(){    // no location data
 		return getPlaces(31);
+	}*/
+		
+	public DataObject[] getYouthCentres(){ // Activities
+		return getPlaces(35, "Youth Centre");
 	}
 		
-	public DataObject[] getYouthCentres(){
-		return getPlaces(35);
-	}
-		
-	public DataObject[] getLibraries(){
-		return getPlaces(12);
+	public DataObject[] getLibraries(){// Details, Facilities, Book groups, Bookbug Sessions, Other events, Opening hours, 
+		return getPlaces(12, "Library");
 	}
 	
-	public DataObject[] getMobLibs(){
-		return getPlaces(16);
+	public DataObject[] getMobLibs(){  //Day and time
+		return getPlaces(16, "Mobile Library");
 	}
 
-	public DataObject[] getPlayAreas(){
-		return getPlaces(60);
+	public DataObject[] getPlayAreas(){ // Site instead of name, Play facilities
+		return getPlaces(60, "Play Area");
 	}
 		
-	public DataObject[] getToilets(){   // aka "public conveniences"
-		return getPlaces(61);
+	public DataObject[] getToilets(){   // aka "public conveniences", Facilities, Opening times, Toilet instead of name, include this in info!
+		return getPlaces(61, "Toilet");
 	}
 		
-	public DataObject[] getDayClubs(){
-		return getPlaces(105);
+	public DataObject[] getDayClubs(){ // Days and times, Services provided
+		return getPlaces(105, null);
 	}
 		
-	public DataObject[] getTrees(){
-		return getPlaces(107);
+	public DataObject[] getTrees(){  // Name of tree collection instead of Name, should include tree?? , Species ?, Information
+		return getPlaces(107, "Tree");
 	}
 		
-	public DataObject[] getMuseumsGalls(){
-		return getPlaces(11);
+	public DataObject[] getMuseumsGalls(){ //Details, Opening Hours, 
+		return getPlaces(11, null);
 	}
 		
 	private URL createCouncilURL(int id) {
@@ -92,21 +92,7 @@ public class XMLParser {
 			e.printStackTrace();
 		}	
 		return url;
-
-/*		for testing, using local xml files:
-			switch (id) {
-				case 17: file = mgr.open("parks.xml");
-				break;
-				case 25: file = mgr.open("sports.xml");
-				break;
-				default: System.err.println("id does not match any local xml files");
-			}	
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-			
-		return url;
-*/
+		
 		
 	}
 	
@@ -125,14 +111,12 @@ public class XMLParser {
 		
 	}
 	
-	private DataObject[] getPlaces(int id) {
+	private DataObject[] getPlaces(int id, String type) {
 		DataObject[] places = null;
 		
 		try {
 			URL url = createCouncilURL(id);
-			
 			Document doc = makeDocument(url);
-			
 			//optional, but recommended
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			
@@ -141,25 +125,65 @@ public class XMLParser {
 			
 			places = new DataObject[entries.getLength()];
 			
+			// for each place:
 			for (int j = 0; j < entries.getLength(); j++) {
-				Element entry = (Element)entries.item(j);
 				
+				Element entry = (Element)entries.item(j);
+				String entryId = entry.getAttribute("id");
 				NodeList entryFields = entry.getElementsByTagName("field");
 				
 				String name = null;
+				Double latitude = Double.NaN;
+				Double longitude = Double.NaN;
+				String info = type;
+				String link = "http://www.edinburgh.gov.uk/directory_record/"+ entryId +"/";
 				
+				
+				// for each data field:
 				for (int i = 0; i < entryFields.getLength(); i++) {
 					Element field = (Element)entryFields.item(i);
 					
-					
-					Double latitude = Double.NaN;
-					Double longitude = Double.NaN;
-					
+					// name
 					if (field.getAttribute("name").equals("Name")) {
 						System.out.println("Name is: " + field.getTextContent());
 						name = field.getTextContent();
 					}
+					if (field.getAttribute("name").equals("Site") && name.equals(null)) {
+						System.out.println("Name is: " + field.getTextContent());
+						name = field.getTextContent();
+					}
+					if (field.getAttribute("name").equals("Toilet") && name.equals(null)) {
+						System.out.println("Name is: " + field.getTextContent());
+						name = field.getTextContent();
+					}
 					
+					if (field.getAttribute("name").equals("Name of tree collection") && name.equals(null)) {
+						System.out.println("Name is: " + field.getTextContent());
+						name = field.getTextContent();
+					}
+					
+					// info
+					if (field.getAttribute("name").equals("Background")) {   // parks
+						System.out.println("Info is: " + field.getTextContent());
+						info = field.getTextContent();
+					}
+					if (field.getAttribute("name").equals("Facilities") && info.equals(null)) {
+						System.out.println("Info is: " + field.getTextContent());
+						info = info + ". Facilities include: " + field.getTextContent();
+					}
+					
+					if (field.getAttribute("name").equals("Vacant") && info.equals(null)) {   // allotments
+						System.out.println("Info is: " + field.getTextContent());
+						info = info + ". Vacant plots: "+ field.getTextContent();
+					}
+					
+					if (field.getAttribute("name").equals("Background")) {   // parks
+						System.out.println("Info is: " + field.getTextContent());
+						info = field.getTextContent();
+					}
+					
+					
+					// location
 					if (field.getAttribute("type").equals("map") && !field.getTextContent().equals("") && field.getTextContent().contains(".")) {
 						String coord[] = field.getTextContent().split(",");
 						System.out.println(coord[0] + " " + coord[1]);
@@ -167,7 +191,7 @@ public class XMLParser {
 						longitude = Double.parseDouble(coord[1]);
 						System.out.println("coordinate is : " + field.getTextContent());
 						
-						places[j] = new DataPlace(name, latitude, longitude);
+						places[j] = new DataPlace(name, latitude, longitude, info, link);
 					}	
 				}
 			}
