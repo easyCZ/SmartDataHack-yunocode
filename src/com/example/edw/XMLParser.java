@@ -1,9 +1,10 @@
 package com.example.edw;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
+import org.apache.commons.io.FileUtils.*;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -30,20 +31,6 @@ public class XMLParser {
 		super();
 		this.resource = resource;
 	}
-
-	private URI parksuri;
-	private URI sportsuri;
-	
-//	public static void main(String[] args) {
-//		System.out.println("ok");
-//		XMLParser test = new XMLParser();
-//		
-//		System.out.println("Parks:");
-//		test.getParks();
-//		
-//		System.out.println("Sports:");
-//		test.getSports();
-//	}
 	
 	public DataObject[] getParks(){
 		return getPlaces(17);
@@ -53,45 +40,61 @@ public class XMLParser {
 		return getPlaces(25);
 	}
 	
-	public Results getAll(){
-		Results results = new Results();
+	public DataObject[] getComCentres(){
+		return getPlaces(24);
+	}
 		
-		results.addAll(Arrays.asList(getParks()));
-		results.addAll(Arrays.asList(getSports()));
+	public DataObject[] getAllotments(){
+		return getPlaces(32);
+	}
 		
-		Location loc = new Location("Andre");
-		loc.setAltitude(2.0);
-		loc.setLatitude(2.0);
+	public DataObject[] getConsAreas(){
+		return getPlaces(31);
+	}
 		
-		results.sort(loc);
+	public DataObject[] getYouthCentres(){
+		return getPlaces(35);
+	}
 		
-		return results;
+	public DataObject[] getLibraries(){
+		return getPlaces(12);
 	}
 	
-	private InputStream getXMLSource(int id) {
+	public DataObject[] getMobLibs(){
+		return getPlaces(16);
+	}
 
-		URI uri = null;
+	public DataObject[] getPlayAreas(){
+		return getPlaces(60);
+	}
 		
-//		try {
-//			uri = new URI("http://www.edinburgh.gov.uk/api/directories/"+id+"/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
-//		} catch (URISyntaxException e) {
-//			System.err.println("CANNOT PARSE URI");
-//		}
-//      file = new File(uri);
+	public DataObject[] getToilets(){   // aka "public conveniences"
+		return getPlaces(61);
+	}
 		
-//		for testing, using local xml files:
+	public DataObject[] getDayClubs(){
+		return getPlaces(105);
+	}
 		
-		// DEBUG
-//		System.out.println("I actuall get here");
-//		
-//		System.out.println("Working Directory = " +   System.getProperty("user.dir"));
-//		
-		AssetManager mgr = resource.getAssets();
+	public DataObject[] getTrees(){
+		return getPlaces(107);
+	}
 		
-//		File file = null;
-		InputStream file = null;
+	public DataObject[] getMuseumsGalls(){
+		return getPlaces(11);
+	}
 		
+	private URL createCouncilURL(int id) {
+		URL url = null;
 		try {
+			url = new URL("http://www.edinburgh.gov.uk/api/directories/"+id+"/entries.xml?api_key=1b8460046f414457cc69bc46cfb5d6ce&per_page=100&page=1");
+		} catch (MalformedURLException e) {
+			System.err.println("CANNOT PARSE URI");
+			e.printStackTrace();
+		}	
+		return url;
+
+/*		for testing, using local xml files:
 			switch (id) {
 				case 17: file = mgr.open("parks.xml");
 				break;
@@ -103,30 +106,33 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 			
-		return file;
+		return url;
+*/
+		
 	}
 	
-	private static Document makeDocument(InputStream file) {
+	private static Document makeDocument(URL url) {
 		
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document document = dBuilder.parse(file);
+			Document document = dBuilder.parse(url.openStream());
 //			document.getDocumentElement().normalize();
 			return document;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+		
 	}
 	
 	private DataObject[] getPlaces(int id) {
 		DataObject[] places = null;
 		
 		try {
-			InputStream fXmlFile = getXMLSource(id);
+			URL url = createCouncilURL(id);
 			
-			Document doc = makeDocument(fXmlFile);
+			Document doc = makeDocument(url);
 			
 			//optional, but recommended
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
@@ -149,16 +155,16 @@ public class XMLParser {
 					Double longitude = Double.NaN;
 					
 					if (field.getAttribute("name").equals("Name")) {
-//						System.out.println("Name is: " + field.getTextContent());
+						System.out.println("Name is: " + field.getTextContent());
 						name = field.getTextContent();
 					}
 					
-					if (field.getAttribute("type").equals("map") && !field.getTextContent().equals("")) {
+					if (field.getAttribute("type").equals("map") && !field.getTextContent().equals("") && field.getTextContent().contains(".")) {
 						String coord[] = field.getTextContent().split(",");
-//						System.out.println(coord[0] + " " + coord[1]);
+						System.out.println(coord[0] + " " + coord[1]);
 						latitude = Double.parseDouble(coord[0]);
 						longitude = Double.parseDouble(coord[1]);
-//						System.out.println("coordinate is : " + field.getTextContent());
+						System.out.println("coordinate is : " + field.getTextContent());
 						
 						places[j] = new DataPlace(name, latitude, longitude);
 					}	
@@ -169,7 +175,7 @@ public class XMLParser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("Places with id " +id + " found: "+places.length);
 		return places;
 	}	
 
