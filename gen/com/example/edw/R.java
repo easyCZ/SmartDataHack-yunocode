@@ -11,9 +11,11 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int checkbox_color=0x7f040003;
         public static final int dark_grey=0x7f040000;
         public static final int light_blue=0x7f040002;
         public static final int white=0x7f040001;
+        public static final int yellow=0x7f040004;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -27,31 +29,77 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int white_cursor=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090004;
-        public static final int button1=0x7f090003;
-        public static final int checkBox1=0x7f090002;
+        public static final int CheckBox01=0x7f090013;
+        public static final int CheckBox02=0x7f090012;
+        public static final int CheckBox03=0x7f090011;
+        public static final int CheckBox04=0x7f090010;
+        public static final int CheckBox05=0x7f09000f;
+        public static final int CheckBox06=0x7f09000e;
+        public static final int CheckBox07=0x7f09000d;
+        public static final int CheckBox08=0x7f09000c;
+        public static final int CheckBox09=0x7f09000b;
+        public static final int CheckBox10=0x7f09000a;
+        public static final int CheckBox8=0x7f090015;
+        public static final int CheckBox9=0x7f090014;
+        public static final int action_settings=0x7f09001d;
+        public static final int button1=0x7f090002;
+        public static final int checkBox1=0x7f090003;
+        public static final int dist=0x7f09001c;
+        public static final int editText1=0x7f090006;
+        public static final int imgIcon=0x7f090019;
+        public static final int linearLayout1=0x7f090008;
+        public static final int listView1=0x7f090017;
+        public static final int relLayout=0x7f090007;
+        public static final int relativeLayout1=0x7f090004;
+        public static final int scrollView1=0x7f090005;
+        public static final int searchButton=0x7f090016;
+        public static final int select_all_checkbox=0x7f090009;
+        public static final int subtext=0x7f09001b;
         public static final int textView1=0x7f090000;
         public static final int textView2=0x7f090001;
+        public static final int txtHeader=0x7f090018;
+        public static final int txtTitle=0x7f09001a;
     }
     public static final class layout {
-        public static final int activity_home_page=0x7f030000;
-        public static final int activity_main=0x7f030001;
+        public static final int activity_main=0x7f030000;
+        public static final int activity_search_page=0x7f030001;
+        public static final int activity_search_results=0x7f030002;
+        public static final int listview_header_row=0x7f030003;
+        public static final int listview_item_row=0x7f030004;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int activity1=0x7f080000;
+        public static final int activity2=0x7f080001;
+        public static final int main=0x7f080002;
+        public static final int search_page=0x7f080003;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int gps_location=0x7f060008;
-        public static final int hello_world=0x7f060006;
-        public static final int hide=0x7f060007;
+        public static final int checkBox01=0x7f060014;
+        public static final int checkBox02=0x7f060013;
+        public static final int checkBox03=0x7f060012;
+        public static final int checkBox04=0x7f060011;
+        public static final int checkBox05=0x7f060010;
+        public static final int checkBox06=0x7f06000f;
+        public static final int checkBox07=0x7f06000e;
+        public static final int checkBox08=0x7f06000d;
+        public static final int checkBox09=0x7f06000c;
+        public static final int checkBox10=0x7f06000b;
+        public static final int checkBox8=0x7f060016;
+        public static final int checkBox9=0x7f060015;
+        public static final int enter_location=0x7f060008;
+        public static final int hide=0x7f060006;
         public static final int intro_checkbox=0x7f060004;
         public static final int introduction1=0x7f060002;
         public static final int introduction2=0x7f060003;
+        public static final int location=0x7f060007;
+        public static final int search_for=0x7f060009;
         public static final int title_activity_display_homepage=0x7f060005;
+        public static final int title_activity_search_resutls=0x7f06000a;
     }
     public static final class style {
         /** 

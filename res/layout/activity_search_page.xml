@@ -1,0 +1,199 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SearchPage" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_above="@+id/editText1"
+            android:layout_alignLeft="@+id/relLayout"
+            android:layout_marginBottom="82dp"
+            android:layout_marginTop="20dp" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:textColor="@color/white" >
+
+                <CheckBox
+                    android:id="@+id/select_all_checkbox"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select All"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox10"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox10"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+                
+                <CheckBox
+                    android:id="@+id/CheckBox09"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox09"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white"
+                    android:checked="true" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox08"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+					android:text="@string/checkBox08"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox07"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox07"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox06"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox06"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox05"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox05"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox04"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox04"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox03"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox03"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox02"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox02"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox01"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox01"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+                
+                <CheckBox
+                    android:id="@+id/CheckBox9"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkBox9"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white"
+                    android:checked="true" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox8"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+					android:text="@string/checkBox8"
+                    android:shadowColor="@color/light_blue"
+                    android:textColor="@color/white" />
+               
+          </LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editText1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/editText1"
+            android:background="@color/light_blue"
+            android:text="Be Awesome"
+            android:textColor="@color/white"
+            android:textStyle="bold" 
+             />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/searchButton"
+            android:layout_alignParentLeft="true"
+            android:ems="10"
+            android:inputType="textPostalAddress"
+            android:text="@string/enter_location"
+            android:textColor="@color/light_blue"
+            android:textCursorDrawable="@drawable/white_cursor" >
+
+            <requestFocus />
+        </EditText>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/relativeLayout1"
+        android:layout_alignParentTop="true" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:text="@string/search_for"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

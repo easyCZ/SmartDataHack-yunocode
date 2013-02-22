@@ -1,43 +1,48 @@
 package com.example.edw;
 
-import java.io.File;
-import java.util.Iterator;
-
-import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 
 public class MainActivity extends Activity {
 
+	Button button_hide;
+	CheckBox check;
+	public static XMLParser xmlParser;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main);
 		
-		XMLParser test = new XMLParser(getResources());
-
-		// REPLACE THIS WITH ACTUAL SEARCH
-//		Results result = new Results();
+		button_hide = (Button) findViewById(R.id.button1);
+		check = (CheckBox) findViewById (R.id.checkBox1);
 		
-		String[] query = {"Sports", "Trees"};
+		View.OnClickListener handler = new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(v == button_hide)
+				{
+					Intent intent1 = new Intent(getApplicationContext(), SearchPage.class);
+					startActivity(intent1);
+					if(check.isChecked())
+						finish();
+				}
+				
+			}
+		};
 		
-		Location location = new Location("ANDRETEST");
-		location.setLatitude(0);
-		location.setLongitude(0);
+		button_hide.setOnClickListener(handler);
 		
-		Results result = test.doSearch(query, location);
-		
-		Iterator<DataObject> iter = result.getResults().iterator();
-        while(iter.hasNext())
-        {
-            System.out.println(iter.next());
-        }  
+//		xmlParser = new XMLParser(null);
+//		xmlParser.loadAll();
 	}
-	
+ 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -45,8 +50,4 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	public void showHomepage(View v) {
-		finish();
-	}
 }
-	

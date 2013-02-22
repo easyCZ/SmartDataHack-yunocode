@@ -7,8 +7,22 @@
     <string name="introduction2">We help you find amazing places in the city you love with minimal effort.</string>
     <string name="intro_checkbox">Do not show me this again</string>
     <string name="title_activity_display_homepage">DisplayHomepage</string>
-    <string name="hello_world">Hello world!</string>
     <string name="hide">Hide</string>
-    <string name="gps_location">GPS LOCATION</string>
-
+    <string name="location">Enter location:</string>
+    <string name="enter_location">Enter Location</string>
+    <string name="search_for">Search for:</string>
+    <string name="title_activity_search_resutls">Search Results</string>
+    <string name="checkBox10">Parks and Gardens</string>
+    <string name="checkBox09">Sports</string>
+    <string name="checkBox08">Community Centers</string>
+    <string name="checkBox07">Allotments</string>
+    <string name="checkBox06">Youth Centers</string>
+    <string name="checkBox05">Libraries</string>
+    <string name="checkBox04">Mobile Libraries</string>
+    <string name="checkBox03">Play Areas</string>
+    <string name="checkBox02">Toilets</string>
+    <string name="checkBox01">Day Clubs</string>
+    <string name="checkBox9">Trees</string>
+    <string name="checkBox8">Museums and Galleries</string>
+    
 </resources>

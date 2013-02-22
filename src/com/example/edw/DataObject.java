@@ -2,9 +2,9 @@ package com.example.edw;
 
 
 public abstract class DataObject {
-	
+
 	protected double distance;
-	
+
 	abstract void setName(String name);
 	abstract String getName();
 	abstract void setLongtitude(double lng);
@@ -16,7 +16,7 @@ public abstract class DataObject {
 	abstract void setLink(String link);
 	abstract String getLink();
 	abstract double getDistance();
-	
+
 	/*
 	 * Returns distance in miles with 2 precision points
 	 */
@@ -31,7 +31,7 @@ public abstract class DataObject {
 		  dist = dist/100;
 		  return dist;
     }
-	
+
 	public double distanceTo(double lat, double lon) {
 		distance = distFrom(lat, lon, getLatitude(), getLongtitude());
 		return distance;

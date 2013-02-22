@@ -2,4 +2,6 @@
 	<color name="dark_grey">#292828</color>
 	<color name="white">#FFFFFF</color>
 	<color name="light_blue">#00A6FF</color>
+	<color name="checkbox_color">#cdc9c9</color>
+	<color name="yellow">#FFBB00</color>
 </resources>
