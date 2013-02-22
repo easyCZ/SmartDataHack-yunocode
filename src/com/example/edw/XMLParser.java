@@ -214,7 +214,7 @@ public class XMLParser {
 				String entryId = entry.getAttribute("id");
 				NodeList entryFields = entry.getElementsByTagName("field");
 				
-				String name = null;
+				String name = "";
 				Double latitude = Double.NaN;
 				Double longitude = Double.NaN;
 				String info = type;
@@ -226,70 +226,72 @@ public class XMLParser {
 					Element field = (Element)entryFields.item(i);
 					
 					// name
-					if (field.getAttribute("name").equals("Name")) {
-//						System.out.println("Name is: " + field.getTextContent());
-						name = field.getTextContent();
-					}
-					if (field.getAttribute("name").equals("Site") && name.equals(null)) {
-						System.out.println("Name is: " + field.getTextContent());
-						name = field.getTextContent();
-					}
-					if (field.getAttribute("name").equals("Toilet") && name.equals(null)) {
-						System.out.println("Name is: " + field.getTextContent());
-						name = field.getTextContent();
-					}
 					
-					if (field.getAttribute("name").equals("Name of tree collection") && name.equals(null)) {
+					if (field.getAttribute("name").equals("Name") ||
+						field.getAttribute("name").equals("Name of tree collection") ||
+						field.getAttribute("name").equals("Toilet") ||
+						field.getAttribute("name").equals("Site") &&
+						!field.getTextContent().equals("")) {
 						System.out.println("Name is: " + field.getTextContent());
 						name = field.getTextContent();
 					}
 					
 					// info
-					if (field.getAttribute("name").equals("Background") || 
+					if ((field.getAttribute("name").equals("Background") || 
 						field.getAttribute("name").equals("Details") ||
 						field.getAttribute("name").equals("Species") || 
-						field.getAttribute("name").equals("Services provided") ||
-						field.getAttribute("name").equals("Information")){   
+						field.getAttribute("name").equals("Information")) && 
+						!field.getTextContent().equals("")) {   
 						System.out.println("Description is: " + field.getTextContent());
 						info = info + " "+field.getTextContent()+ ".";
 					}
-					if (field.getAttribute("name").equals("Activities") || 
+					if ((field.getAttribute("name").equals("Activities") || 
 						field.getAttribute("name").equals("Key Activities") ||
 						field.getAttribute("name").equals("Book groups") ||
 						field.getAttribute("name").equals("Bookbug Sessions") ||
-						field.getAttribute("name").equals("Other events")) {
+						field.getAttribute("name").equals("Other events")) && 
+						!field.getTextContent().equals("")) {
 						System.out.println("Activities are: " + field.getTextContent());
 						info = info + " Activities: " + field.getTextContent() +".";
 					}
 					
-					if (field.getAttribute("name").equals("Facilities") ||
-						field.getAttribute("name").equals("Play facilities")) {
+					if (field.getAttribute("name").equals("Services provided") && 
+						!field.getTextContent().equals("")) {
+						info = field.getTextContent() + ". "+ info;
+					}
+					
+					if ((field.getAttribute("name").equals("Facilities") ||
+						field.getAttribute("name").equals("Play facilities")) && 
+						!field.getTextContent().equals("")) {
 						System.out.println("Facilities are: " + field.getTextContent());
 						info = info + " Facilities: " + field.getTextContent() +".";
 					}
 					
-					if (field.getAttribute("name").equals("Vacant")) {   // allotments
+					if (field.getAttribute("name").equals("Vacant") && 
+						!field.getTextContent().equals("")) {   // allotments
 						System.out.println("Vacant plots are: " + field.getTextContent());
 						info = info + " Vacant plots: "+ field.getTextContent() +".";
 					}
 					
-					if (field.getAttribute("name").equals("Waiting time")) {   // allotments
+					if (field.getAttribute("name").equals("Waiting time") && 
+						!field.getTextContent().equals("")) {   // allotments
 						System.out.println("Waiting time is: " + field.getTextContent());
 						info = info + " Waiting time: "+ field.getTextContent() +".";
 					}
 					
-					if (field.getAttribute("name").equals("Opening Hours") || 
+					if ((field.getAttribute("name").equals("Opening Hours") || 
 						field.getAttribute("name").equals("Opening hours") ||
 						field.getAttribute("name").equals("Opening times") ||
 						field.getAttribute("name").equals("Day and time") ||
-						field.getAttribute("name").equals("Days and times")) {
+						field.getAttribute("name").equals("Days and times")) && 
+						!field.getTextContent().equals("")){
 						System.out.println("Opening times is " + field.getTextContent());
-						info = info + " Open on:" + field.getTextContent() +".";
+						info = info + " Open on: " + field.getTextContent() +".";
 						}
 					
 					
 					// location
-					if (field.getAttribute("type").equals("map") && !field.getTextContent().equals("") && field.getTextContent().contains(".")) {
+					if (field.getAttribute("type").equals("map") && (!field.getTextContent().equals("")) && field.getTextContent().contains(".")) {
 						String coord[] = field.getTextContent().split(",");
 //						System.out.println(coord[0] + " " + coord[1]);
 						latitude = Double.parseDouble(coord[0]);
@@ -307,5 +309,4 @@ public class XMLParser {
 //		System.out.println("Places with id " +id + " found: "+places.length);
 		return places;
 	}	
-
 }
